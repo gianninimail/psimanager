@@ -6,6 +6,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,15 +21,24 @@ import javax.persistence.Table;
 public class Atendimento implements Serializable {
 
 	private static final long serialVersionUID = 1L;   
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private LocalDate data;
+	
 	@Column(name = "esta_pago")
 	private Boolean estaPago;
+	
 	private String anotacoes;
+	
+	@Enumerated(EnumType.STRING)
+	private StatusAtendimento status;
+	
 	@ManyToOne
 	private Paciente paciente;
+	
 	@OneToOne(fetch = FetchType.LAZY)
 	private Pagamento pagamento;
 
@@ -88,5 +99,13 @@ public class Atendimento implements Serializable {
 
 	public void setAnotacoes(String anotacoes) {
 		this.anotacoes = anotacoes;
+	}
+
+	public StatusAtendimento getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusAtendimento status) {
+		this.status = status;
 	}
 }

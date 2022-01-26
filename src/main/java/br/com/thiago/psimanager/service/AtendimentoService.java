@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.thiago.psimanager.model.Atendimento;
+import br.com.thiago.psimanager.model.StatusAtendimento;
 import br.com.thiago.psimanager.repository.AtendimentoRepository;
 
 @Service
@@ -39,7 +40,7 @@ public class AtendimentoService {
 	
 	public Page<Atendimento> pegarTodosPaginado(Integer pagina) {
 		
-		Pageable pag = PageRequest.of(pagina, 5, Sort.by(Sort.Direction.ASC, "cpf", "nome"));
+		Pageable pag = PageRequest.of(pagina, 5, Sort.by(Sort.Direction.ASC, "data"));
 		
 		return repo.findAll(pag);
 	}
@@ -57,5 +58,16 @@ public class AtendimentoService {
 	public void atualizar(Atendimento obj) {
 		
 		repo.save(obj);
+	}
+
+	public List<Atendimento> pegarTodosPorStatusPaginado(StatusAtendimento statusAtendimento, Integer pagina) {
+		
+		Pageable pag = PageRequest.of(pagina, 5, Sort.by(Sort.Direction.ASC, "data"));
+		
+		List<Atendimento> lista = new ArrayList<Atendimento>();
+		
+		repo.findAll(pag).forEach(o -> lista.add(o));
+		
+		return lista;
 	}
 }

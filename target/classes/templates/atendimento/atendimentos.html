@@ -4,43 +4,43 @@
 <body>
 	<div th:replace="~{base :: logo}"></div>
 	<div class="container">
-	<div th:replace="~{base :: titulo('Atendimentos')}"></div>
+		<div th:replace="~{base :: titulo('Atendimentos')}"></div>
 		
-	<nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-1">
-		<div class="navbar-nav">
-			<a class="nav-link nav-iten" aria-current="page" href="#">Todos</a> 
-			<a class="nav-link" href="#">Previstos</a> 
-			<a class="nav-link" href="#">Realizados</a> 
-			<a class="nav-link" href="">Não Realizados</a>
-		</div>
-		<a href="/atendimentos/novo">
-			<button class="btn btn-outline-secondary">Novo</button>
-		</a>
-	</nav>
-	<div class="card">
-		<div class="card-header">Últimos Atendimentos</div>
-		<div class="card-body">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Nome</th>
-						<th scope="col">Data</th>
-						<th scope="col">Foi Realizado?</th>
-						<th scope="col">Está Pago?</th>
-						<th scope="col">opts</th>
-					</tr>
-				</thead>
-				<tbody>
-					
-				</tbody>
-				<tfoot>
-					<tr>
-						<th colspan="6" scope="row">
-						</th>
-					</tr>
-				</tfoot>
-			</table>
+		<nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-1">
+			<div class="navbar-nav">
+				<a th:classappend="${status} == null ? 'active'" class="nav-link nav-iten" href="/atendimentos">Todos</a> 
+				<a th:classappend="${status} == previsto ? 'active'" class="nav-link nav-iten" href="/atendimentos/previsto">Previstos</a> 
+				<a th:classappend="${status} == realizado ? 'active'" class="nav-link nav-iten" href="/atendimentos/realizado">Realizados</a> 
+				<a th:classappend="${status} == nao_realizado ? 'active'"     class="nav-link nav-iten" href="/atendimentos/nao_realizado">Não Realizados</a>
+			</div>
+			<a href="/atendimentos/novo">
+				<button class="btn btn-outline-secondary">Novo</button>
+			</a>
+		</nav>
+		<div class="card">
+			<div class="card-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Nome</th>
+							<th scope="col">Data</th>
+							<th scope="col">Foi Realizado?</th>
+							<th scope="col">Está Pago?</th>
+							<th scope="col">opts</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+					<tfoot>
+						<tr>
+							<th colspan="6" scope="row">
+							</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
 		</div>
 	</div>
 </body>

@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.thiago.psimanager.dto.AtendimentoRequisicao;
 import br.com.thiago.psimanager.model.Atendimento;
+import br.com.thiago.psimanager.model.StatusAtendimento;
 import br.com.thiago.psimanager.service.AtendimentoService;
 
 @Controller
@@ -23,7 +26,7 @@ public class AtendimentoController {
 	@Autowired
 	private AtendimentoService service;
 	
-	@GetMapping("todos")
+	@GetMapping
 	public String pacientes(Model model) {
 
 		List<Atendimento> atendimentos = this.service.pegarTodos();
@@ -48,6 +51,22 @@ public class AtendimentoController {
 		Atendimento at = req.toAtendimento();
 		//service.inserir(at);
 		System.out.println("NAO...foi..no..if....");
-		return "redirect:/atendimentos/todos";
+		return "redirect:/atendimentos";
+	}
+	
+	@GetMapping("/{status}")
+	public String st(@PathVariable String status, Model model) {
+		
+		List<Atendimento> atendimentos = service.pegarTodosPorStatusPaginado(StatusAtendimento.valueOf(status.toUpperCase()), 1);
+		
+		model.addAttribute("atendimentos", atendimentos);
+		model.addAttribute("status", status);
+		
+		return "atendimento/atendimentos";
+	}
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public String onError() {
+		return "redirect:/atendimentos";
 	}
 }
