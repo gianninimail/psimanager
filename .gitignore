@@ -3,6 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+target/m2e-wtp/web-resources/META-INF/maven/br.com.thiago/psimanager/pom.properties
 
 ### STS ###
 .apt_generated
