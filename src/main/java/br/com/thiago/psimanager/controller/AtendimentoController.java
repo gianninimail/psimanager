@@ -1,10 +1,12 @@
 package br.com.thiago.psimanager.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,7 @@ import br.com.thiago.psimanager.dto.AtendimentoRequisicao;
 import br.com.thiago.psimanager.model.Atendimento;
 import br.com.thiago.psimanager.model.StatusAtendimento;
 import br.com.thiago.psimanager.service.AtendimentoService;
+import br.com.thiago.psimanager.service.UsuarioService;
 
 @Controller
 @RequestMapping("atendimentos")
@@ -26,10 +29,13 @@ public class AtendimentoController {
 	@Autowired
 	private AtendimentoService service;
 	
+	@Autowired
+	private UsuarioService servUsuario;
+	
 	@GetMapping
-	public String pacientes(Model model) {
+	public String pacientes(Model model, Principal principal) {
 
-		List<Atendimento> atendimentos = this.service.pegarTodos();
+		List<Atendimento> atendimentos = this.service.pegarTodosPorUsuario(principal.getName(), 0);
 		
 		model.addAttribute("atendimentos", atendimentos);
 		return "atendimento/atendimentos";
@@ -49,6 +55,8 @@ public class AtendimentoController {
 			return "atendimento/novo";
 		}
 		Atendimento at = req.toAtendimento();
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		at.setUsuario(servUsuario.pegarPorID(username));
 		//service.inserir(at);
 		System.out.println("NAO...foi..no..if....");
 		return "redirect:/atendimentos";

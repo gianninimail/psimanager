@@ -1,41 +1,55 @@
 package br.com.thiago.psimanager.model;
 
-import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "usuarios")
-public class Usuario extends Pessoa {
+@Table(name = "users")
+public class Usuario {
 
-	private static final long serialVersionUID = 1L;
-	private String login;
-	private String pass;
+	@Id
+	private String username;
+	private String password;
+	private Boolean enabled;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.LAZY)
+	private List<Atendimento> atendimentos;
 	
 	public Usuario() {}
 	
-	public Usuario(Long cpf, String nome, LocalDate dataNascimento, LocalDate dataPagamento, String login, String pass) {
-		super(cpf, nome, dataNascimento);
-		this.login = login;
-		this.pass = pass;
+	public Usuario(String username, String password, Boolean enabled) {
+		this.username = username;
+		this.password = password;
+		this.enabled = enabled;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getUsername() {
+		return username;
 	}
-	
-	public void setLogin(String login) {
-		this.login = login;
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	
-	public String getPass() {
-		return pass;
+
+	public String getPassword() {
+		return password;
 	}
-	
-	public void setPass(String pass) {
-		this.pass = pass;
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	
-	
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 }

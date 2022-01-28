@@ -70,4 +70,15 @@ public class AtendimentoService {
 		
 		return lista;
 	}
+	
+	public List<Atendimento> pegarTodosPorUsuario(String username, Integer pagina) {
+		
+		Pageable pag = PageRequest.of(pagina, 5, Sort.by(Sort.Direction.ASC, "data"));
+		
+		List<Atendimento> lista = new ArrayList<Atendimento>();
+		
+		repo.findAll(pag).forEach(o -> lista.add(o));
+		
+		return lista;
+	}
 }

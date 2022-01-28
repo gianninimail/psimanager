@@ -47,6 +47,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		<!-- apenas necessário a partir do spring 2.3 -->
 		<dependency>
 		      <groupId>org.springframework.boot</groupId>
@@ -57,6 +62,11 @@
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
 		</dependency>
+		<!-- Extras do Thymeleaf para SpringSecury -->
+		<dependency>
+	      <groupId>org.thymeleaf.extras</groupId>
+	      <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+	    </dependency>
 	</dependencies>
 
 	<build>

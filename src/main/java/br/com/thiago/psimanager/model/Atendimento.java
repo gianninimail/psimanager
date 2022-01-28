@@ -36,10 +36,13 @@ public class Atendimento implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private StatusAtendimento status;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Usuario usuario;
+	
 	@ManyToOne
 	private Paciente paciente;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(optional = true,fetch = FetchType.LAZY)
 	private Pagamento pagamento;
 
 	public Atendimento() {
@@ -107,5 +110,13 @@ public class Atendimento implements Serializable {
 
 	public void setStatus(StatusAtendimento status) {
 		this.status = status;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 }

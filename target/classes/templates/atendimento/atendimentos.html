@@ -31,7 +31,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						
+						<tr th:each="a : ${atendimentos}">
+							<th th:text="${a.id}"></th>
+							<td th:text="${a.paciente.nome}"></td>
+							<td th:text="${a.data}"></td>
+							<td th:text="${a.status}"></td>
+							<td th:text="${a.estaPago} == false ? Não : Sim"></td>
+							<td th:text="${a.status}"></td>
+						</tr>
 					</tbody>
 					<tfoot>
 						<tr>
