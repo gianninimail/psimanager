@@ -8,8 +8,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -21,11 +19,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().authenticated().and()
-				//.httpBasic();
-				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home", true).permitAll())
-				.logout(logout -> logout.logoutUrl("/logout"))
-				.csrf().disable();
+		http.authorizeRequests()
+			.antMatchers("/home/**").permitAll()
+			.anyRequest().authenticated().and()
+			//.httpBasic();//No lugar de formLogin()
+			.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/atendimentos/todos", true).permitAll())
+			.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/home"))
+			.csrf().disable();
 	}
 	
 	@Override

@@ -1,10 +1,10 @@
 package br.com.thiago.psimanager.service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,7 +15,7 @@ import br.com.thiago.psimanager.model.StatusAtendimento;
 import br.com.thiago.psimanager.repository.AtendimentoRepository;
 
 @Service
-public class AtendimentoService {
+public class AtendimentoService implements Serializable {
 
 	private final AtendimentoRepository repo;
 
@@ -38,11 +38,15 @@ public class AtendimentoService {
 		return lista;
 	}
 	
-	public Page<Atendimento> pegarTodosPaginado(Integer pagina) {
+	public List<Atendimento> pegarTodosPaginado(Integer pagina) {
 		
 		Pageable pag = PageRequest.of(pagina, 5, Sort.by(Sort.Direction.ASC, "data"));
 		
-		return repo.findAll(pag);
+		List<Atendimento> lista = new ArrayList<Atendimento>();
+		
+		repo.findAll(pag).forEach(o -> lista.add(o));;
+		
+		return lista;
 	}
 	
 	public void inserir(Atendimento obj) {
@@ -66,7 +70,7 @@ public class AtendimentoService {
 		
 		List<Atendimento> lista = new ArrayList<Atendimento>();
 		
-		repo.findAll(pag).forEach(o -> lista.add(o));
+		repo.findByStatus(statusAtendimento, pag).forEach(o -> lista.add(o));
 		
 		return lista;
 	}

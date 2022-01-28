@@ -3,21 +3,34 @@
 <head th:replace="~{base :: head}"></head>
 <body>
 	<div th:replace="~{base :: logo}"></div>
-	<div th:replace="~{base :: titulo('Home')}"></div>
 	<div class="container">
-		<nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
-			<div class="navbar-nav">
-				<a class="nav-link nav-iten" aria-current="page" href="#">Todos</a> 
-				<a class="nav-link" href="#">Previstos</a> 
-				<a class="nav-link" href="">Feitos</a>
-			</div>
-			<a href="/paciente/formulario">
-				<button class="btn btn-outline-secondary">Novo</button>
-			</a>
-		</nav>
-		<div class="card mt-5">
-			<div class="card-header">Sistemas de Gerenciamento de Pacientes</div>
+		<div th:replace="~{base :: titulo('Atendimentos pendentes')}"></div>
+		<div class="card">
 			<div class="card-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Data</th>
+							<th scope="col">#</th>
+							<th scope="col">Nome</th>
+							<th scope="col">Está Pago?</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="a : ${atendimentos}">
+							<td th:text="${a.data}"></td>
+							<th th:text="${a.id}"></th>
+							<td th:text="${a.paciente.nome}"></td>
+							<td th:text="${a.estaPago} == false ? Não : Sim"></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th colspan="6" scope="row">
+							</th>
+						</tr>
+					</tfoot>
+				</table>
 			</div>
 		</div>
 	</div>
