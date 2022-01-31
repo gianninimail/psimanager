@@ -20,6 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
+			.antMatchers("/api/**").permitAll()
 			.antMatchers("/home/**").permitAll()
 			.anyRequest().authenticated().and()
 			//.httpBasic();//No lugar de formLogin()

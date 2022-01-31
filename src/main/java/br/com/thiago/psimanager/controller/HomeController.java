@@ -26,4 +26,14 @@ public class HomeController {
 		
 		return "home";
 	}
+	
+	@GetMapping("/home2")
+	public String home2(Model model) {
+		
+		List<Atendimento> atendimentos = service.pegarTodosPorStatusPaginado(StatusAtendimento.NAO_REALIZADO, 0);
+		
+		model.addAttribute("atendimentos", atendimentos);
+		
+		return "home2";
+	}
 }

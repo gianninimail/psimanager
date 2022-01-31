@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "atendimentos")
 public class Atendimento implements Serializable {
@@ -37,12 +39,13 @@ public class Atendimento implements Serializable {
 	private StatusAtendimento status;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Usuario usuario;
 	
 	@ManyToOne
 	private Paciente paciente;
 	
-	@OneToOne(optional = true,fetch = FetchType.LAZY)
+	@OneToOne(optional = true, fetch = FetchType.LAZY)
 	private Pagamento pagamento;
 
 	public Atendimento() {

@@ -1,5 +1,6 @@
 package br.com.thiago.psimanager.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,7 +12,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class Usuario {
+public class Usuario implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String username;
@@ -51,5 +54,13 @@ public class Usuario {
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public List<Atendimento> getAtendimentos() {
+		return atendimentos;
+	}
+
+	public void setAtendimentos(List<Atendimento> atendimentos) {
+		this.atendimentos = atendimentos;
 	}
 }

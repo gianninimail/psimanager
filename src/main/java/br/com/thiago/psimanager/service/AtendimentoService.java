@@ -1,10 +1,10 @@
 package br.com.thiago.psimanager.service;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,15 +15,11 @@ import br.com.thiago.psimanager.model.StatusAtendimento;
 import br.com.thiago.psimanager.repository.AtendimentoRepository;
 
 @Service
-public class AtendimentoService implements Serializable {
+public class AtendimentoService {
 
-	private final AtendimentoRepository repo;
+	@Autowired
+	private AtendimentoRepository repo;
 
-	public AtendimentoService(AtendimentoRepository _repo) {
-
-		this.repo = _repo;
-	}
-	
 	public Optional<Atendimento> pegarPorID(Long cpf) {
 		
 		return repo.findById(cpf);
@@ -34,6 +30,8 @@ public class AtendimentoService implements Serializable {
 		List<Atendimento> lista = new ArrayList<Atendimento>();
 		
 		repo.findAll().forEach(o -> lista.add(o));
+		
+		System.out.println(lista.size());
 		
 		return lista;
 	}
