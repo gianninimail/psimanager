@@ -20,9 +20,9 @@ public class AtendimentoService {
 	@Autowired
 	private AtendimentoRepository repo;
 
-	public Optional<Atendimento> pegarPorID(Long cpf) {
+	public Optional<Atendimento> pegarPorID(Long id) {
 		
-		return repo.findById(cpf);
+		return repo.findById(id);
 	}
 	
 	public List<Atendimento> pegarTodos() {
@@ -57,9 +57,9 @@ public class AtendimentoService {
 		repo.deleteById(cpf);
 	}
 	
-	public void atualizar(Atendimento obj) {
-		
-		repo.save(obj);
+	public Atendimento atualizar(Atendimento obj) {
+
+		return repo.save(obj);
 	}
 
 	public List<Atendimento> pegarTodosPorStatusPaginado(StatusAtendimento statusAtendimento, Integer pagina) {

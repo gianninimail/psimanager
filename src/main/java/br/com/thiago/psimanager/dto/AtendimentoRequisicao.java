@@ -3,17 +3,28 @@ package br.com.thiago.psimanager.dto;
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import br.com.thiago.psimanager.model.Atendimento;
+import br.com.thiago.psimanager.model.Paciente;
 
 public class AtendimentoRequisicao {
 	
-	@NotBlank(message = "teste")//NotBlank.atendimentoRequisicao.fData=O campo deve ser preenchido!
+	@NotNull
+	private Long fId;
+	@NotBlank//(message = "teste")//NotBlank.atendimentoRequisicao.fData=O campo deve ser preenchido!
 	private String fData;
-	@NotBlank
-	private String fPaciente;
+	private Paciente fPaciente;
 	private String fAnotacao1;
 	private String fAnotacao2;
+
+	public Long getfId() {
+		return fId;
+	}
+
+	public void setfId(Long fId) {
+		this.fId = fId;
+	}
 
 	public String getfData() {
 		return fData;
@@ -23,11 +34,11 @@ public class AtendimentoRequisicao {
 		this.fData = fData;
 	}
 
-	public String getfPaciente() {
+	public Paciente getfPaciente() {
 		return fPaciente;
 	}
 
-	public void setfPaciente(String fPaciente) {
+	public void setfPaciente(Paciente fPaciente) {
 		this.fPaciente = fPaciente;
 	}
 

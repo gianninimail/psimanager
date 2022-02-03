@@ -38,19 +38,18 @@
 
 	<script>
 		function onload() {
-			var app = new Vue(
-					{
-						el : '#app',
-						data : {
-							atendimentos : []
-						},
-						mounted () {
-						    axios
-						      .get('http://localhost:8080/api/atendimentos/0')
-						      .then(response => (this.atendimentos = response.data))
-						  }
-					}
-			)
+			var app = new Vue
+			({
+				el : '#app',
+				data : {
+					atendimentos : []
+				},
+				mounted () {
+				    axios
+				      .get('http://localhost:8080/api/atendimentos/0')
+				      .then(response => (this.atendimentos = response.data))
+				}
+			})
 		}
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="~{base :: head}"></head>
+<body onload="onload()">
+	<div th:replace="~{base :: logo}"></div>
+	<div th:replace="~{base :: titulo('Editar Atendimento')}"></div>
+	<div class="card  mt-3" id="app">
+		<div class="card-body">
+			<div class="mb-3">
+			  	<label for="fId" class="form-label">ID</label>
+			  	<input v-model="atendimento.id" v-bind:class="{'is-invalid':error.response.data.errors[0] !== ''}" id="fId" required="required" type="text"s class="form-control" placeholder="nome do paciente" />
+				<div v-if="error.response.data.errors[0]" class="invalid-feedback">
+				  	{{error.response.data.errors[0]}}
+				</div>
+			</div>
+			<div class="mb-3">
+			  <label for="fPaciente" class="form-label">Paciente</label>
+			  <input v-model="atendimento.paciente.nome" id="fPaciente" type="text" class="form-control" placeholder="nome do paciente" />
+			  <small>Campo para selecionar o paciente, que traz um busca para tal</small>
+			</div>
+			<div class="mb-3">
+			  <label for="fData" class="form-label">Data do agendamento</label>
+			  <input v-model="atendimento.data" id="fData" required="required" type="date" class="form-control" />
+			  <small>Escolha uma data prevista para o atendimento ou deixe em branco para atendimento ontime</small>
+			</div>
+			<div class="mb-3">
+			  <label for="fAnotacao1" class="form-label">Anotações</label>
+			  <textarea v-model="atendimento.anotacao1" class="form-control" id="fAnotacao1" name="fAnotacao1" rows="5"></textarea>
+			  <small>Campo para anotações sobre o atendimento</small>
+			</div>
+			<div class="mb-3">
+			  <label for="fAnotacao2" class="form-label">Anotações adicionais</label>
+			  <textarea class="form-control" id="fAnotacao2" name="fAnotacao2" rows="5"></textarea>
+			  <small>Campo para anotações adicionais sobre o atendimento</small>
+			</div>
+			<button v-on:click="enviarAtendimento(atendimento)" class="btn btn-primary">Salvar</button>
+		</div>
+	</div>
+	<script>
+		function onload() 
+		{
+			var app = new Vue
+			({
+				el : '#app',
+					data : {
+						atendimento : []
+				},
+				mounted () {
+				    axios
+				      .get('http://localhost:8080/api/atendimentos/por_id/2')
+				      .then(response => {
+				    	  //atendimento.errors = {efId: '', efData: ''},
+				    	  val.erros = {fData: '',fId: ''}
+				    	  this.atendimento = response.data;
+				      })
+				},
+				methods: {
+					enviarAtendimento: function (atendimento) {
+						//console.log(atendimento);
+						axios
+							.post('http://localhost:8080/api/atendimentos/editar', {
+								fId: atendimento.id,
+								fData: atendimento.data,
+								fPaciente: atendimento.paciente,
+								fAnotacao1: atendimento.anotacao1,
+								fAnotacao2: atendimento.anotacao2
+							})
+							//.then(response => console.log(response))
+							.catch(error => {
+								console.log(error.response.data.errors);
+								error.response.data.errors.forEach(error => {this.val.erros[error.field] = error.defaultMessage;})
+							})
+					}
+				}
+			})
+		}
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</body>
+</html>

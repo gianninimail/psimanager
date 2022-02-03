@@ -41,13 +41,19 @@ public class AtendimentoController {
 		return "atendimento/atendimentos";
 	}
 	
-	@GetMapping("novo")
+	@GetMapping("/novo")
 	public String novo(AtendimentoRequisicao req) {
 		
 		return "atendimento/novo";
 	}
 	
-	@PostMapping("adicionar")
+	@GetMapping("/editar")
+	public String editar(AtendimentoRequisicao req) {
+		
+		return "atendimento/editar";
+	}
+	
+	@PostMapping("/adicionar")
 	public String adicionar(@Valid AtendimentoRequisicao req, BindingResult result) {
 
 		if (result.hasErrors()) {
