@@ -36,7 +36,7 @@ public class InterceptadorDeAcessos implements HandlerInterceptor {
 		
 		Acesso acesso = (Acesso) request.getAttribute("acesso");
 		acesso.setDuracao(Duration.between(acesso.getData(), LocalDateTime.now()));
-		service.inserir(acesso);
+		//service.inserir(acesso);
 	}
 	
 	

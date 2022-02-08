@@ -8,10 +8,7 @@
 		<div class="card-body">
 			<div class="mb-3">
 			  	<label for="fId" class="form-label">ID</label>
-			  	<input v-model="atendimento.id" v-bind:class="{'is-invalid':error.response.data.errors[0] !== ''}" id="fId" required="required" type="text"s class="form-control" placeholder="nome do paciente" />
-				<div v-if="error.response.data.errors[0]" class="invalid-feedback">
-				  	{{error.response.data.errors[0]}}
-				</div>
+			  	<input v-model="atendimento.id" id="fId" required="required" type="text"s class="form-control" placeholder="nome do paciente" />
 			</div>
 			<div class="mb-3">
 			  <label for="fPaciente" class="form-label">Paciente</label>
@@ -50,7 +47,7 @@
 				      .get('http://localhost:8080/api/atendimentos/por_id/2')
 				      .then(response => {
 				    	  //atendimento.errors = {efId: '', efData: ''},
-				    	  val.erros = {fData: '',fId: ''}
+				    	  //val.erros = {fData: '',fId: ''}
 				    	  this.atendimento = response.data;
 				      })
 				},
@@ -66,10 +63,7 @@
 								fAnotacao2: atendimento.anotacao2
 							})
 							//.then(response => console.log(response))
-							.catch(error => {
-								console.log(error.response.data.errors);
-								error.response.data.errors.forEach(error => {this.val.erros[error.field] = error.defaultMessage;})
-							})
+							
 					}
 				}
 			})
