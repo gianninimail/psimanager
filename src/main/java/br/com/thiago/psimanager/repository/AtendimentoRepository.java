@@ -21,4 +21,6 @@ public interface AtendimentoRepository extends PagingAndSortingRepository<Atendi
 	
 	@Cacheable("antendimentos_por_status")
 	List<Atendimento> findByStatus(StatusAtendimento status, Pageable page);
+	
+	List<Atendimento> findByPaciente_Nome(String nomePaciente);//Acessar atributo do relacionamento com Paciente
 }

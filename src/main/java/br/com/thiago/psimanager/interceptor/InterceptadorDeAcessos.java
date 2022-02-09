@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import br.com.thiago.psimanager.service.AcessoService;
 
-@Controller
+@Component
 public class InterceptadorDeAcessos implements HandlerInterceptor {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class InterceptadorDeAcessos implements HandlerInterceptor {
 		
 		Acesso acesso = (Acesso) request.getAttribute("acesso");
 		acesso.setDuracao(Duration.between(acesso.getData(), LocalDateTime.now()));
-		//service.inserir(acesso);
+		service.inserir(acesso);
 	}
 	
 	

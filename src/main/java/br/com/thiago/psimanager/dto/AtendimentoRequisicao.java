@@ -1,6 +1,8 @@
 package br.com.thiago.psimanager.dto;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,6 +19,15 @@ public class AtendimentoRequisicao {
 	private Paciente fPaciente;
 	private String fAnotacao1;
 	private String fAnotacao2;
+	
+	public AtendimentoRequisicao(Atendimento atendimento) {
+		
+		this.fId = atendimento.getId();
+		this.fData = atendimento.getData().toString();
+		this.fPaciente = atendimento.getPaciente();
+		this.fAnotacao1 = atendimento.getAnotacoes().split("|")[0];
+		this.fAnotacao2 = atendimento.getAnotacoes().split("|")[1];
+	}
 
 	public Long getfId() {
 		return fId;
@@ -69,5 +80,8 @@ public class AtendimentoRequisicao {
 		return o;
 	}
 	
-	
+	public static List<AtendimentoRequisicao> converter(List<Atendimento> atendimentos) {
+		
+		return atendimentos.stream().map(AtendimentoRequisicao::new).collect(Collectors.toList());
+	}
 }
