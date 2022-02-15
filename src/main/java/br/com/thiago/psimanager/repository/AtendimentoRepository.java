@@ -2,7 +2,6 @@ package br.com.thiago.psimanager.repository;
 
 import java.util.List;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +18,6 @@ public interface AtendimentoRepository extends PagingAndSortingRepository<Atendi
 	@Query("SELECT a FROM Atendimento a join a.usuario u WHERE u.username = :username")
 	List<Atendimento> findByUsuario(@Param(value = "username")String username);
 	
-	@Cacheable("antendimentos_por_status")
 	List<Atendimento> findByStatus(StatusAtendimento status, Pageable page);
 	
 	List<Atendimento> findByPaciente_Nome(String nomePaciente);//Acessar atributo do relacionamento com Paciente

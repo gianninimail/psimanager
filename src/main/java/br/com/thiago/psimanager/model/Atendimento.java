@@ -31,12 +31,12 @@ public class Atendimento implements Serializable {
 	private LocalDate data;
 	
 	@Column(name = "esta_pago")
-	private Boolean estaPago;
+	private Boolean estaPago = false;
 	
 	private String anotacoes;
 	
 	@Enumerated(EnumType.STRING)
-	private StatusAtendimento status;
+	private StatusAtendimento status = StatusAtendimento.NAO_REALIZADO;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore

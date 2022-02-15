@@ -36,13 +36,22 @@ public class AtendimentoService {
 		return lista;
 	}
 	
-	public List<Atendimento> pegarTodosPaginado(Integer pagina) {
+	public List<Atendimento> pegarTodosPaginado(Integer pagina, Integer qtd) {
 		
-		Pageable pag = PageRequest.of(pagina, 5, Sort.by(Sort.Direction.ASC, "data"));
+		Pageable pag = PageRequest.of(pagina, qtd, Sort.by(Sort.Direction.ASC, "data"));
 		
 		List<Atendimento> lista = new ArrayList<Atendimento>();
 		
 		repo.findAll(pag).forEach(o -> lista.add(o));;
+		
+		return lista;
+	}
+	
+	public List<Atendimento> pegarTodosPaginado(Pageable paginacao) {
+		
+		List<Atendimento> lista = new ArrayList<Atendimento>();
+		
+		repo.findAll(paginacao).forEach(o -> lista.add(o));;
 		
 		return lista;
 	}
@@ -52,9 +61,9 @@ public class AtendimentoService {
 		repo.save(obj);
 	}
 	
-	public void apagar(Long cpf) {
+	public void apagar(Long id) {
 		
-		repo.deleteById(cpf);
+		repo.deleteById(id);
 	}
 	
 	public Atendimento atualizar(Atendimento obj) {

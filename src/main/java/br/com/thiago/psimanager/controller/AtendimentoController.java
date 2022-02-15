@@ -6,7 +6,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,7 @@ public class AtendimentoController {
 	@Autowired
 	private UsuarioService servUsuario;
 	
+	@Cacheable("antendimentos_por_usuario")
 	@GetMapping
 	public String pacientes(Model model, Principal principal) {
 
@@ -53,6 +55,7 @@ public class AtendimentoController {
 		return "atendimento/editar";
 	}
 	
+	@CacheEvict(value = "antendimentos_por_usuario", allEntries = true)
 	@PostMapping("/adicionar")
 	public String adicionar(@Valid AtendimentoRequisicao req, BindingResult result) {
 
@@ -60,9 +63,9 @@ public class AtendimentoController {
 			System.out.println("foi..no..if....");
 			return "atendimento/novo";
 		}
-		Atendimento at = req.toAtendimento();
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		at.setUsuario(servUsuario.pegarPorID(username));
+		//Atendimento at = req.toAtendimento();
+		//String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		//at.setUsuario(servUsuario.pegarPorID(username));
 		//service.inserir(at);
 		System.out.println("NAO...foi..no..if....");
 		return "redirect:/atendimentos";
