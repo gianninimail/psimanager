@@ -14,7 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import br.com.thiago.psimanager.security.AuthFilter;
+import br.com.thiago.psimanager.security.TokenService;
 import br.com.thiago.psimanager.service.UsuarioService;
 
 @Configuration
@@ -26,6 +29,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private UsuarioService serviceUsuario;
+	
+	@Autowired
+	private TokenService serviceToken;
 	
 	@Override
 	@Bean
@@ -51,7 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 			//autenticação via Token
 			.csrf().disable()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and().addFilterBefore(new AuthFilter(serviceToken, serviceUsuario), UsernamePasswordAuthenticationFilter.class);
 	}
 	
 	@Override//Metodo para configurar o modulo de autenticação

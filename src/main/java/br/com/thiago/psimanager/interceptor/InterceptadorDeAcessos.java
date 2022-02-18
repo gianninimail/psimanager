@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import br.com.thiago.psimanager.model.Acesso;
 import br.com.thiago.psimanager.service.AcessoService;
 
 @Component

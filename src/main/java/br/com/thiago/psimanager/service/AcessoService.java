@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.thiago.psimanager.interceptor.Acesso;
+import br.com.thiago.psimanager.model.Acesso;
 import br.com.thiago.psimanager.repository.AcessoRepository;
 
 @Service

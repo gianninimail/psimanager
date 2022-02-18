@@ -1,4 +1,4 @@
-package br.com.thiago.psimanager.api;
+package br.com.thiago.psimanager.security;
 
 import javax.validation.Valid;
 
@@ -29,8 +29,8 @@ public class AuthController {
 	@PostMapping
 	public ResponseEntity<TokenDTO> autenticar(@RequestBody @Valid Login login) {
 		
-		System.out.println(login.getLogin());
-		System.out.println(login.getSenha());
+		//System.out.println(login.getLogin());
+		//System.out.println(login.getSenha());
 		
 		UsernamePasswordAuthenticationToken dadosLogin = login.converter();
 		try {
@@ -38,7 +38,7 @@ public class AuthController {
 			Authentication auth = authManager.authenticate(dadosLogin);
 			String token = tokenService.gerarToken(auth);
 			
-			System.out.println(token);
+			//System.out.println(token);
 			
 			return ResponseEntity.ok(new TokenDTO(token, "Bearer"));
 			

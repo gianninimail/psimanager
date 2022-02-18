@@ -1,4 +1,4 @@
-package br.com.thiago.psimanager.interceptor;
+package br.com.thiago.psimanager.model;
 
 import java.io.Serializable;
 import java.time.Duration;

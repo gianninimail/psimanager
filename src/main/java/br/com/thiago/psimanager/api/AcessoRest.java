@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.thiago.psimanager.interceptor.Acesso;
+import br.com.thiago.psimanager.model.Acesso;
 import br.com.thiago.psimanager.service.AcessoService;
 
 @RestController
