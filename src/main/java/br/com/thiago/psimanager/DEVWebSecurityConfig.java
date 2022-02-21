@@ -4,34 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.com.thiago.psimanager.security.AuthFilter;
-import br.com.thiago.psimanager.security.TokenService;
 import br.com.thiago.psimanager.service.UsuarioService;
 
 @Configuration
 @EnableWebSecurity
-@Profile("prod")
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+@Profile("dev")
+public class DEVWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	//@Autowired
-	//private DataSource dataSource;
-	
 	@Autowired
 	private UsuarioService serviceUsuario;
-	
-	@Autowired
-	private TokenService serviceToken;
 	
 	@Override
 	@Bean
@@ -43,25 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override//Configuração de acesso aos recursos (URLs) do projeto
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.GET, "/api/**").permitAll()
-			.antMatchers(HttpMethod.POST, "/api/auth").permitAll()
-			.antMatchers("/home/**").permitAll()
-			.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-			.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-			.antMatchers(HttpMethod.DELETE, "/api/atendimentos/*").hasRole("ADM")
-			.anyRequest().authenticated()
+			.antMatchers("/api/**").permitAll()
 			.and()
-			//.httpBasic();//No lugar de formLogin()
-			
-			//autenticação via formulario. Para via token, tem que desabilitar
-			//.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/atendimentos/todos", true).permitAll())
-			//.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/home"))
-			//.csrf().disable();
-
-			//autenticação via Token
-			.csrf().disable()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and().addFilterBefore(new AuthFilter(serviceToken, serviceUsuario), UsernamePasswordAuthenticationFilter.class);
+			.csrf().disable();
 	}
 	
 	@Override//Metodo para configurar o modulo de autenticação
@@ -83,7 +56,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		web.ignoring()
         .antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
-		//super.configure(web);
 	}
 
 	//Para utilização de usuários em memória
