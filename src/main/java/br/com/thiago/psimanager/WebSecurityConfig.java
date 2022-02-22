@@ -21,7 +21,7 @@ import br.com.thiago.psimanager.service.UsuarioService;
 
 @Configuration
 @EnableWebSecurity
-@Profile("prod")
+@Profile(value = {"prod", "test"})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	//@Autowired
